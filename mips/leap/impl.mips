@@ -1,0 +1,47 @@
+## Registers
+
+# | Register | Usage     | Type    | Description                                      |
+# | -------- | --------- | ------- | ------------------------------------------------ |
+# | `$a0`    | input     | integer | year to check                                    |
+# | `$v0`    | output    | boolean | input is leap year (`0` = `false`, `1` = `true`) |
+# | `$t0-9`  | temporary | any     | used for temporary storage                       |
+
+.globl is_leap_year
+
+.data
+divisor_hundred:   .word 100
+divisor_four_hundred:    .word 400
+divisor_four: .word 4
+
+.text
+
+is_leap_year:
+        lw $t2, divisor_hundred
+        li $v0, 0
+
+        div $a0, $t2
+        mfhi $t1
+        beq $t1, $zero, is_cent
+
+        lw $t2, divisor_four
+
+        div $a0, $t2
+        mfhi $t1
+        beq $t1, $zero, set_leap_year
+
+        jr $ra
+
+is_cent:
+        lw $t2, divisor_four_hundred
+
+        div $a0, $t2
+        mfhi $t1
+        beq $t1, $zero, set_leap_year
+
+        jr $ra
+
+set_leap_year:
+        li $v0, 1
+
+        jr $ra
+        
