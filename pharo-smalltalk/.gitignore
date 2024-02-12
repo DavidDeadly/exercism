@@ -1,0 +1,9 @@
+pharo
+pharo-ui
+Pharo.image
+Pharo.changes
+PharoDebug*
+
+pharo-local/
+pharo-vm/
+Pharo10*
